@@ -1,0 +1,23 @@
+{
+  "name": "sin",
+  "version": "1.0.0",
+  "description": "Projet scolaire SIN",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CallMeMrSam/ProjetSIN_WEBSITE.git"
+  },
+  "author": "CallMeMrSam, Mutter120",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CallMeMrSam/ProjetSIN_WEBSITE/issues"
+  },
+  "homepage": "https://github.com/CallMeMrSam/ProjetSIN_WEBSITE#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  }
+}
