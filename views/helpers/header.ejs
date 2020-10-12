@@ -3,39 +3,70 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>UrTxt</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
   </head>
   <body>
-    <nav class="navbar">
+
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="field">
+          <label for="title has-text-white" class="label is-medium">Titre</label>
+          <div class="control">
+            <input id="title" type="text" class="input">
+          </div>
+
+          <label for="description" class="label is-medium">Description</label>
+          <div class="control">
+            <textarea id="description" class="textarea"></textarea>
+          </div>
+
+          <label for="content" class="label is-medium">Contenu</label>
+          <div class="control">
+            <textarea id="content" class="textarea" rows="10"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-close is-large" aria-label="close"></div>
+    </div>
+    
+    <nav class="navbar is-black" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item">
-          UrTxt
+        <a class="navbar-item" href="/">
+          <img src="img/logo.png" width="35" height="35">
+        </a>
+    
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </a>
       </div>
-      <div class="navbar-menu">
+    
+      <div id="navbar" class="navbar-menu">
         <div class="navbar-start">
-          <div class="navbar-item">
-            <a href="/post" class="button is-link">
-              Nouvelle publication
-            </a>
-          </div>
-          <a href="/" class="navbar-item">
-            Fil d'actualité
+
+          <a class="navbar-item" href="/">
+            Accueil
           </a>
+
+          <div class="navbar-item">
+            <a class="button is-link modal-button">Rédiger un article</a>
+          </div>
+
         </div>
         <div class="navbar-end">
+
           <div class="navbar-item">
-            <a href="/login" class="button is-success is-outlined">
-              Se connecter
-            </a>
+            <a href="/signin" class="button is-primary is-light">Inscrivez-vous</a>
           </div>
           <div class="navbar-item">
-            <a href="/signin" class="button is-warning is-outlined">
-              S'inscrire
-            </a>
+            <a href="/signin" class="button is-primary">Connectez-vous</a>
           </div>
+
         </div>
       </div>
     </nav>
