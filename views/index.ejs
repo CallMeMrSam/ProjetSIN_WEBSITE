@@ -4,6 +4,9 @@
         <div class="container">
           <p class="title is-3 has-text-white">Fil d'actualité</p>
           <div class="container">
+            <% if (articles.length === 0) { %>
+              <p class="subtitle is-4 has-text-white">Aucun article.</p>
+            <% } %>
             <% articles.sort((a, b) => b.date - a.date).forEach(article => { %>
               <%- include('helpers/articleCard', { article }); %>
             <% }) %>
