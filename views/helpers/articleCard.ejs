@@ -7,14 +7,14 @@
     <div class="card-content">
       <div class="media">
         <div class="media-content">
-          <p class="subtitle is-6">Rédigé par <a>@<%= article.author.username %></a></p>
+          <p class="subtitle is-6">Rédigé par <a>@<%= article.author %></a></p>
         </div>
       </div>
   
       <div class="content">
         <strong><%= article.description %></strong>
         <br><br>
-        Le <time><%= new Date(article.date).toLocaleDateString() %></time>
+        Le <time><%= new Date(article.createdAt).toLocaleDateString() %></time>
       </div>
     </div>
     <footer class="card-footer">

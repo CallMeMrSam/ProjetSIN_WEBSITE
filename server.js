@@ -5,23 +5,23 @@ const flash = require('express-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
-const bcrypt = require('bcrypt');
 const passport = require('passport');
 const app = express();
-const slugify = require('slugify');
 const methodOverride = require('method-override');
 const fs = require('fs');
-const createError = require('http-errors')
+const createError = require('http-errors');
+
+const User = require('./models/User');
+
+const mongo = require('./mongoose');
+mongo.init();
 
 const initializePassport = require('./passport-config')
 initializePassport(
   passport,
-  username => USERS.find(user => user.username === username),
-  id => USERS.find(user => user.id === id)
+  async(username) => User.findOne({ username: username }),
+  async(id) => User.findById(id)
 );
-
-const ARTICLES = [];
-const USERS = [];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -51,14 +51,14 @@ fs.readdirSync(routesDirectory).forEach((file) => {
 
         fs.readdirSync(path.resolve(`${routesDirectory}${path.sep}${propsName}`)).forEach((file2) => {
             if(file2.split(".").pop() === 'js') {
-                var props = require(path.resolve(`${routesDirectory}${path.sep}${propsName}${path.sep}${file2}`))(renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS, passport);
+                var props = require(path.resolve(`${routesDirectory}${path.sep}${propsName}${path.sep}${file2}`))(renderTemplate, checkAuthenticated, checkNotAuthenticated, passport);
                 app.use(props.name, props.router);
             }
         })
 
     } else {
         if(file.split(".").pop() === 'js') {
-            var props = require(path.resolve(`${routesDirectory}${path.sep}${file}`))(renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS, passport);
+            var props = require(path.resolve(`${routesDirectory}${path.sep}${file}`))(renderTemplate, checkAuthenticated, checkNotAuthenticated, passport);
             app.use(props.name, props.router);
         }
     }

@@ -7,7 +7,7 @@
             <% if (articles.length === 0) { %>
               <p class="subtitle is-4 has-text-white">Aucun article.</p>
             <% } %>
-            <% articles.sort((a, b) => b.date - a.date).forEach(article => { %>
+            <% articles.sort((a, b) => b.createdAt - a.createdAt).forEach(article => { %>
               <%- include('helpers/articleCard', { article }); %>
             <% }) %>
           </div>

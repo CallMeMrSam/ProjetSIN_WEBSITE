@@ -1,10 +1,11 @@
 
-const LocalStrategy = require('passport-local').Strategy
-const bcrypt = require('bcrypt')
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
 function initialize(passport, getUserByUsername, getUserById) {
+  
   const authenticateUser = async (username, password, done) => {
-    const user = getUserByUsername(username)
+    const user = await getUserByUsername(username);
     if (user == null) {
       return done(null, false, { message: 'Nom d\'utilisateur ou mot de passe incorrecte.' })
     }
@@ -16,14 +17,15 @@ function initialize(passport, getUserByUsername, getUserById) {
         return done(null, false, { message: 'Nom d\'utilisateur ou mot de passe incorrecte.' })
       }
     } catch (e) {
+      throw e
       return done(e)
     }
   }
 
   passport.use(new LocalStrategy({ usernameField: 'username' }, authenticateUser))
   passport.serializeUser((user, done) => done(null, user.id))
-  passport.deserializeUser((id, done) => {
-    return done(null, getUserById(id))
+  passport.deserializeUser(async (id, done) => {
+    return done(null, await getUserById(id))
   })
 }
 

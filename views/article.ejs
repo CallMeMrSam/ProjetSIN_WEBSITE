@@ -3,12 +3,17 @@
       <div class="hero-body">
         <div class="container">
           <p class="title is-3 has-text-white"><%= article.title %></p>
-          <p class="subtitle is-4 has-text-white"><a>@<%= article.author.username %></a> <time><%= new Date(article.date).toLocaleDateString() %></time></p>
+          <p class="subtitle is-4 has-text-white"><a>@<%= article.author %></a> <time><%= new Date(article.createdAt).toLocaleDateString() %></time></p>
           <div class="box radius">
-            <p>
-              <%- article.content.replace(/\n/g, '<br>\n') %>
-            </p>
+            <%- article.htmlContent %>
           </div>
+          <% if (user) { %>
+            <% if (user.username === article.author || user.permission >= 50) { %>
+            <form method="POST" action="/delete/<%= article._id %>/?_method=DELETE">
+              <button class="button is-danger" type="submit">Supprimer l'article</button>
+            </form>
+            <% } %>
+          <% } %>
         </div>
       </div>
     </section>

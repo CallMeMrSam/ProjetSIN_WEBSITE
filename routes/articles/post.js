@@ -1,33 +1,29 @@
-var express = require('express');
-var router = express.Router();
-const slugify = require('slugify')
+const express = require('express');
+const router = express.Router();
 
-module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS) => {
+const Article = require('../../models/Article');
+const mongoose = require('mongoose');
+
+
+module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated) => {
 
     router.get('/', checkAuthenticated, (req, res) => {
         renderTemplate(req, res, 'post');
     });
     
-    router.post('/', checkAuthenticated, (req, res) => {
+    router.post('/', checkAuthenticated, async (req, res) => {
         let title = req.body.title;
         let description = req.body.description || 'Aucune description';
         let content = req.body.content;
-    
-        ARTICLES.push({
+        
+        await new Article({
+            _id: mongoose.Types.ObjectId(),
             title,
-            author: {
-                id: req.user.id,
-                username: req.user.username
-            },
             description,
             content,
-            date: Date.now(),
-            id: slugify(title, {
-                strict: true,
-                lower: true,
-                replacement: '-'
-            })
-        })
+            author: req.user.username
+        }).save()
+
         res.redirect('/');
     })
     

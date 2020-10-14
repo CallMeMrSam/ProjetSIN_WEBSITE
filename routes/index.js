@@ -1,10 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Article = require('../models/Article');
+const User = require('../models/User');
+const mongoose = require('mongoose');
 
-module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS) => {
+module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated) => {
 
-    router.get('/', (req, res, next) => {
-        renderTemplate(req, res, 'index', {articles: ARTICLES});
+    router.get('/', async (req, res, next) => {
+        let articles = await Article.find({});
+        renderTemplate(req, res, 'index', {articles});
     })
     
     return {

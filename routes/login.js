@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS, passport) => {
+module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, passport) => {
 
     router.get('/', checkNotAuthenticated, (req, res) => {
         renderTemplate(req, res, 'login');

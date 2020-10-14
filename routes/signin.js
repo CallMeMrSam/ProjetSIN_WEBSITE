@@ -1,8 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const bcrypt = require('bcrypt');
 
-module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS, passport) => {
+const User = require('../models/User');
+const mongoose = require('mongoose');
+
+module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated) => {
 
     router.get('/', checkNotAuthenticated, (req, res) => {
         renderTemplate(req, res, 'signin');
@@ -18,13 +21,19 @@ module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, ART
             return res.redirect('/signin');
         }
 
+        if(await User.findOne({ username: username })) {
+            req.flash('error', 'Le nom d\'utilisateur est déjà utilisé.');
+            return res.redirect('/signin');
+        }
+
         try {
             let hashedPassword = await bcrypt.hash(password, 10);
-            USERS.push({
-                id: Date.now().toString(),
+            new User({
+                _id: mongoose.Types.ObjectId(),
                 username: username,
-                password: hashedPassword
-            })
+                password: hashedPassword,
+                createdAt: Date.now(),
+            }).save()
             req.flash('success', 'Vous avez été inscris, veuillez vous connecter.')
             res.redirect('/login');
         } catch(e) {

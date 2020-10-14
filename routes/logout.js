@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS) => {
+module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated) => {
 
-    router.delete('/', (req, res) => {
+    router.delete('/', checkAuthenticated, (req, res) => {
         req.logOut()
         req.flash('success', 'Vous avez été déconnecté.')
         res.redirect('/login')

@@ -1,18 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated, ARTICLES, USERS) => {
+const Article = require('../../models/Article');
+
+module.exports = (renderTemplate, checkAuthenticated, checkNotAuthenticated) => {
 
     router.get('/', (req, res) => {
         res.redirect('/')
     })
 
-    router.get('/:id', (req, res) => {
+    router.get('/:id', async (req, res) => {
         let id = req.params.id;
-        if(!id || !ARTICLES.find(a => a.id === id)) {
+        if(!id || !await Article.findOne({ id: id })) {
             return res.redirect('/');
         }
-        let article = ARTICLES.find(a => a.id === id);
+        let article = await Article.findOne({ id: id });
         renderTemplate(req, res, 'article', {article});
     });
     
