@@ -1,0 +1,15 @@
+<%- include('helpers/header', { user, b: true }); %>
+    <section class="hero is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+          <p class="title is-3 has-text-white"><%= article.title %></p>
+          <p class="subtitle is-4 has-text-white"><a>@<%= article.author.username %></a> <time><%= new Date(article.date).toLocaleDateString() %></time></p>
+          <div class="box radius">
+            <p>
+              <%- article.content.replace(/\n/g, '<br>\n') %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+<%- include('helpers/footer.ejs') %>

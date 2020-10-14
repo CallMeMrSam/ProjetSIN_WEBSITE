@@ -1,12 +1,14 @@
-<%- include('helpers/header'); %>
-    <section class="section">
-      <p class="title is-3 has-text-white">Fil d'actualité</p>
-      <div class="container">
-
-      <% articles.forEach(article => { %>
-        <%- include('helpers/articleCard', { article }); %>
-      <% }) %>
-        
+<%- include('helpers/header', { user, b: false }); %>
+    <section class="hero is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+          <p class="title is-3 has-text-white">Fil d'actualité</p>
+          <div class="container">
+            <% articles.sort((a, b) => b.date - a.date).forEach(article => { %>
+              <%- include('helpers/articleCard', { article }); %>
+            <% }) %>
+          </div>
+        </div>
       </div>
     </section>
-<% include('helpers/footer.ejs') %>
+<%- include('helpers/footer.ejs') %>

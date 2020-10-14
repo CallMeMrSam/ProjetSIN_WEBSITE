@@ -4,39 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>UrTxt</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<%= b ? '../' : '' %>css/bulma.min.css">
+    <link rel="stylesheet" href="<%= b ? '../' : '' %>css/style.css">
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
   </head>
   <body>
-
-    <div class="modal">
-      <div class="modal-background"></div>
-      <div class="modal-content">
-        <div class="field">
-          <label for="title has-text-white" class="label is-medium">Titre</label>
-          <div class="control">
-            <input id="title" type="text" class="input">
-          </div>
-
-          <label for="description" class="label is-medium">Description</label>
-          <div class="control">
-            <textarea id="description" class="textarea"></textarea>
-          </div>
-
-          <label for="content" class="label is-medium">Contenu</label>
-          <div class="control">
-            <textarea id="content" class="textarea" rows="10"></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="modal-close is-large" aria-label="close"></div>
-    </div>
     
     <nav class="navbar is-black" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
-          <img src="img/logo.png" width="35" height="35">
+          <img src="<%= b ? '../' : '' %>img/logo.png" width="35" height="35">
         </a>
     
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
@@ -54,18 +31,23 @@
           </a>
 
           <div class="navbar-item">
-            <a class="button is-link modal-button">Rédiger un article</a>
+            <a class="button is-link modal-button" href="/post">Rédiger un article</a>
           </div>
 
         </div>
         <div class="navbar-end">
-
-          <div class="navbar-item">
-            <a href="/signin" class="button is-primary is-light">Inscrivez-vous</a>
-          </div>
-          <div class="navbar-item">
-            <a href="/signin" class="button is-primary">Connectez-vous</a>
-          </div>
+          <% if (!user) { %>
+            <div class="navbar-item">
+              <a href="/signin" class="button is-primary is-light">Inscrivez-vous</a>
+            </div>
+            <div class="navbar-item">
+              <a href="/login" class="button is-primary">Connectez-vous</a>
+            </div>
+          <% } else { %>
+            <div class="navbar-item">
+              <a>@<%= user.username %></a>
+            </div>
+          <% } %>
 
         </div>
       </div>
